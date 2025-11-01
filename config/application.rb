@@ -24,5 +24,8 @@ module RecipeSearchDemo
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # My custom stuff added starts here:
+    config.active_record.schema_format = :sql
   end
 end
