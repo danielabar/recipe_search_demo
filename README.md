@@ -1,24 +1,39 @@
-# README
+# Recipe Search Demo
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A Rails 8 demo application serving as a companion to a blog post about lessons learned implementing site-wide search with PostgreSQL full-text search and the `pg_search` gem.
 
-Things you may want to cover:
+## Features
 
-* Ruby version
+- User authentication with secure passwords
+- Recipe and ingredient management
+- Optimized CSV-based seeding for large datasets
+- PostgreSQL full-text search (coming soon)
 
-* System dependencies
+## Prerequisites
 
-* Configuration
+- Ruby 3.4.6 (see [.ruby-version](.ruby-version))
+- Docker and Docker Compose
+- Bundler
 
-* Database creation
+## Setup
 
-* Database initialization
+1. **Start the database:**
+   ```bash
+   docker compose up
+   ```
 
-* How to run the test suite
+2. **Install dependencies and setup the application:**
+   ```bash
+   bin/setup
+   ```
 
-* Services (job queues, cache servers, search engines, etc.)
+## Database Seeding
 
-* Deployment instructions
+This project includes optimized CSV-based seeding for generating large datasets suitable for search performance testing:
 
-* ...
+- **Users:** 10,000 (configurable via `SEED_USERS`)
+- **System Recipes:** 10,000 (configurable via `SEED_SYSTEM_RECIPES`)
+- **User Recipes:** 1,500,000 (configurable via `SEED_USER_RECIPES`)
+- **Ingredients:** Sourced from USDA food data in [db/seed_data/ingredients_usda.csv](db/seed_data/ingredients_usda.csv)
+
+The seeding process uses PostgreSQL's `COPY` command for efficient bulk loading.
