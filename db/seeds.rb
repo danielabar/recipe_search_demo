@@ -13,9 +13,9 @@ load Rails.root.join("db/seeds/users.rb")
 puts "✅ Users seeded."
 
 # WIP on next seeding steps...
-# puts "Seeding ingredients..."
-# load Rails.root.join("db/seeds/ingredients.rb")
-# puts "✅ Ingredients seeded."
+puts "Seeding ingredients..."
+load Rails.root.join("db/seeds/ingredients.rb")
+puts "✅ Ingredients seeded."
 
 # puts "Seeding system recipes..."
 # load Rails.root.join("db/seeds/recipes.rb")
