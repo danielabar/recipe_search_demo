@@ -1,9 +1,32 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
+# db/seeds.rb
 #
-# Example:
+# Main orchestrator for recipe_search_demo seeding
 #
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+puts "🌱 Starting recipe search demo seeding..."
+
+# Load shared configuration and utilities
+load Rails.root.join("db/seeds/shared/config.rb")
+load Rails.root.join("db/seeds/shared/utilities.rb")
+
+puts "Seeding users..."
+load Rails.root.join("db/seeds/users.rb")
+puts "✅ Users seeded."
+
+# WIP on next seeding steps...
+# puts "Seeding ingredients..."
+# load Rails.root.join("db/seeds/ingredients.rb")
+# puts "✅ Ingredients seeded."
+
+# puts "Seeding system recipes..."
+# load Rails.root.join("db/seeds/recipes.rb")
+# puts "✅ System recipes seeded."
+
+# puts "Seeding user recipes..."
+# load Rails.root.join("db/seeds/user_recipes.rb")
+# puts "✅ User recipes seeded."
+
+# puts "Running post-load maintenance..."
+# load Rails.root.join("db/seeds/maintenance.rb")
+# puts "✅ Maintenance completed."
+
+# puts "🎉 Recipe search demo seeding completed!"
