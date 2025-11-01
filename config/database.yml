@@ -2,23 +2,24 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  database: <%= ENV['DATABASE_NAME'] || "blogpg" %>
-  username: <%= ENV['DATABASE_USER'] || "blogpg" %>
-  password: <%= ENV['DATABASE_PASSWORD'] || "blogpg" %>
+  database: <%= ENV['DATABASE_NAME'] || "recipe_search_demo" %>
+  username: <%= ENV['DATABASE_USER'] || "recipe_search_demo" %>
+  password: <%= ENV['DATABASE_PASSWORD'] || "recipe_search_demo" %>
   port: <%= ENV['DATABASE_PORT'] || "5432" %>
   host: <%= ENV['DATABASE_HOST'] || "127.0.0.1" %>
 
 development:
   <<: *default
+  database: recipe_search_demo_development
   port: 5434
 
 test:
   <<: *default
-  database: blogpg_test
+  database: recipe_search_demo_test
   port: 5434
 
 production:
   <<: *default
-  database: blogpg_production
-  username: blogpg
-  password: <%= ENV['BLOGPG_DATABASE_PASSWORD'] %>
+  database: recipe_search_demo_production
+  username: recipe_search_demo
+  password: <%= ENV['RECIPE_SEARCH_DEMO_DATABASE_PASSWORD'] %>

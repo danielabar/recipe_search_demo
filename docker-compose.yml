@@ -1,8 +1,6 @@
-version: "3.8"
-
 services:
   database:
-    image: postgres:14
+    image: postgres:18
     volumes:
       # Named volume to persist database data outside of container.
       # Format is "named_volume:path/in/container"
@@ -18,8 +16,6 @@ services:
       # FIXME: Replace 5434 with something unsused
       - "5434:5432"
     environment:
-      # Sets the superuser password for PostgreSQL OR if you don't want it, see below
-      POSTGRES_PASSWORD: shhhhItsASecret
       # This is fine for local dev container only. DO NOT USE IN PRODUCTION!
       POSTGRES_HOST_AUTH_METHOD: trust
 

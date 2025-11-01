@@ -1,2 +1,2 @@
 -- FIXME: replace role name and password with your app name
-create role blogpg with CREATEDB login password 'blogpg';
+create role recipe_search_demo with CREATEDB login password 'recipe_search_demo';
