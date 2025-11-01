@@ -163,6 +163,70 @@ ALTER SEQUENCE public.sessions_id_seq OWNED BY public.sessions.id;
 
 
 --
+-- Name: user_recipe_ingredients; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_recipe_ingredients (
+    id bigint NOT NULL,
+    user_recipe_id bigint NOT NULL,
+    ingredient_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: user_recipe_ingredients_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.user_recipe_ingredients_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_recipe_ingredients_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.user_recipe_ingredients_id_seq OWNED BY public.user_recipe_ingredients.id;
+
+
+--
+-- Name: user_recipes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.user_recipes (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    title character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: user_recipes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.user_recipes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: user_recipes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.user_recipes_id_seq OWNED BY public.user_recipes.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -223,6 +287,20 @@ ALTER TABLE ONLY public.sessions ALTER COLUMN id SET DEFAULT nextval('public.ses
 
 
 --
+-- Name: user_recipe_ingredients id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_recipe_ingredients ALTER COLUMN id SET DEFAULT nextval('public.user_recipe_ingredients_id_seq'::regclass);
+
+
+--
+-- Name: user_recipes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_recipes ALTER COLUMN id SET DEFAULT nextval('public.user_recipes_id_seq'::regclass);
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -278,6 +356,22 @@ ALTER TABLE ONLY public.sessions
 
 
 --
+-- Name: user_recipe_ingredients user_recipe_ingredients_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_recipe_ingredients
+    ADD CONSTRAINT user_recipe_ingredients_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_recipes user_recipes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_recipes
+    ADD CONSTRAINT user_recipes_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -328,6 +422,41 @@ CREATE INDEX index_sessions_on_user_id ON public.sessions USING btree (user_id);
 
 
 --
+-- Name: index_unq_on_user_recipe_id_and_ingredient_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_unq_on_user_recipe_id_and_ingredient_id ON public.user_recipe_ingredients USING btree (user_recipe_id, ingredient_id);
+
+
+--
+-- Name: index_user_recipe_ingredients_on_ingredient_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_recipe_ingredients_on_ingredient_id ON public.user_recipe_ingredients USING btree (ingredient_id);
+
+
+--
+-- Name: index_user_recipe_ingredients_on_user_recipe_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_recipe_ingredients_on_user_recipe_id ON public.user_recipe_ingredients USING btree (user_recipe_id);
+
+
+--
+-- Name: index_user_recipes_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_user_recipes_on_user_id ON public.user_recipes USING btree (user_id);
+
+
+--
+-- Name: index_user_recipes_on_user_id_and_title; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_user_recipes_on_user_id_and_title ON public.user_recipes USING btree (user_id, title);
+
+
+--
 -- Name: index_users_on_email_address; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -351,11 +480,35 @@ ALTER TABLE ONLY public.recipe_ingredients
 
 
 --
+-- Name: user_recipe_ingredients fk_rails_691c65fda4; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_recipe_ingredients
+    ADD CONSTRAINT fk_rails_691c65fda4 FOREIGN KEY (ingredient_id) REFERENCES public.ingredients(id);
+
+
+--
+-- Name: user_recipes fk_rails_6a6d01dc88; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_recipes
+    ADD CONSTRAINT fk_rails_6a6d01dc88 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: sessions fk_rails_758836b4f0; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.sessions
     ADD CONSTRAINT fk_rails_758836b4f0 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: user_recipe_ingredients fk_rails_8b356466aa; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_recipe_ingredients
+    ADD CONSTRAINT fk_rails_8b356466aa FOREIGN KEY (user_recipe_id) REFERENCES public.user_recipes(id);
 
 
 --
@@ -365,6 +518,8 @@ ALTER TABLE ONLY public.sessions
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20251101201141'),
+('20251101200855'),
 ('20251101190611'),
 ('20251101190316'),
 ('20251101172246'),
