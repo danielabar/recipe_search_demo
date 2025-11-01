@@ -9,7 +9,8 @@ require 'pg'
 # ---------- CONFIG ----------
 NUM_USERS        = (ENV['SEED_USERS'] || 10_000).to_i
 NUM_SYSTEM_RECIPES = (ENV['SEED_SYSTEM_RECIPES'] || 10_000).to_i
-NUM_USER_RECIPES = (ENV['SEED_USER_RECIPES'] || 1_500_000).to_i
+# eventually bump this up to 1.5M
+NUM_USER_RECIPES = (ENV['SEED_USER_RECIPES'] || 500_000).to_i
 INGREDIENTS_FROM_USDA = File.exist?(Rails.root.join('db', 'seed_data', 'ingredients_usda.csv'))
 CHUNK_SIZE       = (ENV['SEED_CHUNK'] || 100_000).to_i    # chunk size for user_recipes generation and COPY
 TMP_DIR          = Rails.root.join('tmp', 'seeds')
