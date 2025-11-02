@@ -67,7 +67,8 @@ CREATE TABLE public.pg_search_documents (
     searchable_type character varying,
     searchable_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    content_vector tsvector
 );
 
 
@@ -435,6 +436,13 @@ CREATE UNIQUE INDEX index_ingredients_on_name ON public.ingredients USING btree 
 
 
 --
+-- Name: index_pg_search_documents_on_content_vector; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_pg_search_documents_on_content_vector ON public.pg_search_documents USING gin (content_vector);
+
+
+--
 -- Name: index_pg_search_documents_on_searchable; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -519,6 +527,13 @@ CREATE UNIQUE INDEX index_users_on_email_address ON public.users USING btree (em
 
 
 --
+-- Name: pg_search_documents pg_search_documents_content_vector_update; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER pg_search_documents_content_vector_update BEFORE INSERT OR UPDATE ON public.pg_search_documents FOR EACH ROW EXECUTE FUNCTION tsvector_update_trigger('content_vector', 'pg_catalog.english', 'content');
+
+
+--
 -- Name: recipe_ingredients fk_rails_176a228c1e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -573,6 +588,7 @@ ALTER TABLE ONLY public.user_recipe_ingredients
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20251102151554'),
 ('20251102140729'),
 ('20251101201141'),
 ('20251101200855'),
